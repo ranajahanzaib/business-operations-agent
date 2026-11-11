@@ -1,0 +1,1 @@
+"""OpsAgent local reference application."""
