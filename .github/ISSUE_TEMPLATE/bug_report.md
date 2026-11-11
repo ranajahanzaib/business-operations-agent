@@ -1,26 +1,32 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: ''
+about: Report a reproducible problem
+title: ""
 labels: bug
-assignees: ''
+assignees: ""
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Summary
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. See error
+Describe what happened.
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+## Steps to reproduce
 
-**Environment**
-- OS: [e.g. macOS 26.4.1, Windows 11, Ubuntu 24.04.4]
-- Version: [e.g. 1.0.0]
+1.
+2.
+3.
 
-**Additional context**
-Add any other context or screenshots here.
+## Expected behavior
+
+Describe what you expected to happen.
+
+## Environment
+
+- Operating system:
+- OpsAgent version or commit:
+- Python version:
+- Node.js version:
+
+## Additional context
+
+Include logs or screenshots that help reproduce the issue. Remove credentials and personal data before posting.

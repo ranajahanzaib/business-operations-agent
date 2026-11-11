@@ -60,8 +60,9 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-[INSERT CONTACT METHOD].
-All complaints will be reviewed and investigated promptly and fairly.
+the contact method listed on the [project owner's GitHub profile](https://github.com/ranajahanzaib).
+Please do not post private or sensitive details in public issues. Reports will
+be reviewed fairly and kept confidential to the extent possible.
 
 All community leaders are obligated to respect the privacy and security of the
 reporter of any incident.

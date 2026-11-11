@@ -1,46 +1,13 @@
-## Contributing
+# Contributing
 
-We welcome contributions of all kinds to improve this project! Here's how you can get involved:
+Contributions are welcome. To propose a change:
 
-1. **Fork the Repository**: Start by forking the repository to your GitHub account.
+1. Fork the repository and clone your fork.
+2. Create a branch for the change.
+3. Make the change and add tests where appropriate.
+4. Run the relevant checks described in [docs/development.md](docs/development.md).
+5. Commit with a clear, descriptive message and push the branch to your fork.
+6. Open a pull request against `main`. Describe the change and include relevant test results.
+7. Respond to review feedback and update the pull request as needed.
 
-2. **Clone Your Fork**: Clone the forked repository to your local machine:
-
-   ```bash
-   git clone <repo_url>
-   cd repo_dir
-   ```
-
-3. **Create a Branch**: Create a new branch for your feature or bug fix:
-
-   ```bash
-   git checkout -b feature-name
-   ```
-
-4. **Make Changes**: Make your changes to the codebase. Be sure to follow existing code style and conventions.
-
-5. **Commit Changes**: Commit your changes with a clear and descriptive message:
-
-   ```bash
-   git commit -m "Add detailed description of the changes"
-   ```
-
-6. **Push Changes**: Push your changes to your fork:
-
-   ```bash
-   git push origin feature-name
-   ```
-
-7. **Submit a Pull Request**: Open a pull request from your branch to the main repository's branch. Include a detailed description of your changes and the problem they solve.
-
-8. **Review and Feedback**: Participate in the review process. Make any requested changes, and your contribution will be merged!
-
-### Guidelines
-
-- Ensure your code follows the existing style and conventions.
-- Include tests for any new functionality or bug fixes.
-- Write clear, concise commit messages and pull request descriptions.
-
-### Issues
-
-Feel free to report bugs or suggest enhancements by creating an issue. Be sure to include detailed information about the problem and, if possible, steps to reproduce it.
+For bugs and feature requests, use the repository's GitHub issue templates. Do not include real credentials, personal data, or undisclosed vulnerability details in public issues. See [SECURITY.md](SECURITY.md) for vulnerability reports.
