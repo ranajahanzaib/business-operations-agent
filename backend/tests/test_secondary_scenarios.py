@@ -118,6 +118,39 @@ def test_inventory_reservation_is_approved_transactional_and_idempotent(tmp_path
     assert error.value.status_code == 409
 
 
+def test_ticket_escalation_is_approved_transactional_and_verified(tmp_path, monkeypatch):
+    path = tmp_path / "escalation-happy.sqlite3"
+    seed(path)
+    patch_services(path, monkeypatch)
+    run_id = "escalation-happy-run"
+    make_run(path, run_id)
+    with connect(path) as c:
+        ticket = c.execute(
+            "SELECT t.id,t.version FROM support_tickets t JOIN orders o ON o.id=t.order_id WHERE t.category='delayed_delivery' AND t.priority='high' AND t.status='open' AND o.status IN ('pending','processing','shipped') ORDER BY t.id LIMIT 1"
+        ).fetchone()
+        assert ticket
+    actions, _ = api.prepare_actions(
+        run_id,
+        "propose_ticket_priority_update",
+        {
+            "ticket_id": ticket["id"],
+            "new_priority": "urgent",
+            "reason": "Delayed delivery complaint needs escalation.",
+        },
+    )
+    assert len(actions) == 1
+    proposal_id = make_proposal(path, run_id, actions)
+    result = asyncio.run(api.approve(proposal_id, {"id": "operator", "role": "operator"}))
+    assert result["status"] == "completed"
+    assert result["verification"]["overall_status"] == "passed"
+    with connect(path) as c:
+        row = c.execute(
+            "SELECT priority,version FROM support_tickets WHERE id=?", (ticket["id"],)
+        ).fetchone()
+        assert row["priority"] == "urgent"
+        assert row["version"] == ticket["version"] + 1
+
+
 def test_stale_ticket_version_rejects_escalation_without_write(tmp_path, monkeypatch):
     path = tmp_path / "escalation.sqlite3"
     seed(path)

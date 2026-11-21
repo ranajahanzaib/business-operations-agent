@@ -1693,7 +1693,7 @@ async def approve(proposal_id: str, user: dict = Depends(operator)) -> dict:
                     ticket["category"] != "delayed_delivery"
                     or ticket["priority"] != "high"
                     or ticket["order_id"] != action["order_id"]
-                    or ticket["new_priority"] != "urgent"
+                    or action["new_priority"] != "urgent"
                 ):
                     raise HTTPException(409, "Ticket no longer meets escalation policy")
                 order = c.execute(

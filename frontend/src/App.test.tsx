@@ -200,6 +200,51 @@ it("renders a pending proposal with its approval action", async () => {
   expect(screen.getByText(/high → urgent/)).toBeInTheDocument();
 });
 
+it("advances pagination across server-paginated business datasets", async () => {
+  localStorage.setItem("token", "local-operator-token");
+  const payloads: Record<string, unknown> = {
+    "/api/dashboard": { counts: {}, pending_approvals: 0 },
+    "/api/runs": { items: [] },
+    "/api/data/orders?limit=20&offset=0&search=&sort_by=": {
+      items: Array.from({ length: 20 }, (_, i) => ({
+        id: `o${i + 1}`,
+        order_number: `NS-0000${i + 1}`,
+      })),
+      total: 40,
+      offset: 0,
+    },
+    "/api/data/orders?limit=20&offset=20&search=&sort_by=": {
+      items: [{ id: "o21", order_number: "NS-000021" }],
+      total: 40,
+      offset: 20,
+    },
+  };
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(
+      async (input: RequestInfo | URL) =>
+        new Response(JSON.stringify(payloads[String(input)] ?? {}), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+    ),
+  );
+  render(
+    <QueryClientProvider
+      client={
+        new QueryClient({ defaultOptions: { queries: { retry: false } } })
+      }
+    >
+      <App />
+    </QueryClientProvider>,
+  );
+  fireEvent.click(await screen.findByRole("button", { name: /Orders/ }));
+  expect(await screen.findByText(/Showing 1–20 of 40/)).toBeInTheDocument();
+  fireEvent.click(screen.getByRole("button", { name: "Next page" }));
+  expect(await screen.findByText(/Showing 21–40 of 40/)).toBeInTheDocument();
+  expect(await screen.findByText("NS-000021")).toBeInTheDocument();
+});
+
 it("expands an independent evaluation result", async () => {
   setupWorkspace((url) => {
     if (url === "/api/dashboard")

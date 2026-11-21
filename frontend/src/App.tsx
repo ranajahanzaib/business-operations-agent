@@ -414,7 +414,7 @@ export default function App() {
                     <button
                       onClick={() =>
                         setInput(
-                          "Check whether order ORD-000001 can be fulfilled with current inventory and prepare a reservation if possible.",
+                          "Check whether order o0015 (NS-000015) can be fulfilled with current inventory and prepare a reservation if possible.",
                         )
                       }
                     >
@@ -745,7 +745,7 @@ export default function App() {
                     onClick={() =>
                       setPage(
                         Math.min(
-                          Math.ceil(tableRows.length / pageSize) - 1,
+                          Math.ceil(matchingTotal / pageSize) - 1,
                           page + 1,
                         ),
                       )
@@ -796,25 +796,50 @@ export default function App() {
           ) : active === "Settings" ? (
             <Settings />
           ) : (
-            <section className="card empty">
-              <FileCheck2 />
-              <b>{active} dashboard</b>
-              <span>
-                Results are based on committed business records, never
-                model-generated claims.
-              </span>
-              {active === "Approvals" &&
-                (runs.data?.items || [])
-                  .filter((r: Obj) => r.status === "awaiting_approval")
-                  .map((r: Obj) => (
-                    <button
-                      className="run-row"
-                      onClick={() => setRun(r.id)}
-                      key={r.id}
-                    >
-                      {r.request} <ChevronRight />
-                    </button>
-                  ))}
+            <section className="card activity-card">
+              <div className="card-title">
+                <div>
+                  <div className="eyebrow">HUMAN REVIEW</div>
+                  <h2>Pending approvals</h2>
+                </div>
+              </div>
+              {(runs.data?.items || [])
+                .filter((r: Obj) => r.status === "awaiting_approval")
+                .map((r: Obj) => (
+                  <button
+                    className="run-row"
+                    onClick={() => {
+                      setRun(r.id);
+                      setActive("Workspace");
+                    }}
+                    key={r.id}
+                  >
+                    <div className={"run-ico " + r.status}>
+                      <ShieldCheck size={15} />
+                    </div>
+                    <div className="run-info">
+                      <b>{r.request}</b>
+                      <small>
+                        {new Date(r.created_at).toLocaleString()} · {r.model}
+                      </small>
+                    </div>
+                    <span className={"status " + r.status}>
+                      {r.status.replace("_", " ")}
+                    </span>
+                  </button>
+                ))}
+              {!(runs.data?.items || []).some(
+                (r: Obj) => r.status === "awaiting_approval",
+              ) && (
+                <div className="empty">
+                  <ShieldCheck />
+                  <b>No pending approvals</b>
+                  <span>
+                    Results are based on committed business records, never
+                    model-generated claims.
+                  </span>
+                </div>
+              )}
             </section>
           )}
           <footer>
