@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use Business Operations Agent (OpsAgent) in research or teaching, please cite this software."
+title: "Business Operations Agent (OpsAgent)"
+version: 0.1.0
+authors:
+  - family-names: Rana
+    given-names: Jahanzaib
+    orcid: "https://orcid.org/0009-0006-7085-0440"
+repository-code: "https://github.com/ranajahanzaib/business-operations-agent"
+license: MIT
+abstract: "OpsAgent is a local-first AI business operations reference system. It gives a configured model provider typed read and proposal tools for a synthetic retail business, pauses proposed state changes at a durable LangGraph checkpoint for human approval, executes approved batches atomically in SQLite with an execution ledger, and independently verifies committed database state against scenario invariants."
+keywords:
+  - ai-agents
+  - human-in-the-loop
+  - langgraph
+  - operations
+  - sqlite
